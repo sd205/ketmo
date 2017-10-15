@@ -1,0 +1,189 @@
+<% if (features & getAllFeatures()[featureKey].value) { %>
+	<div class="col-sm-<%= cols %>">
+		<% if (page == parentRef || taskCount > 0) { %>
+			<h3><%= title %></h3>
+		<% } %>
+
+		<% if (page == parentRef) { %>
+			<div id="add<%= parentLabel %><%= taskType %>" class="row">
+				<div class="col-sm-12">
+				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add<%= parentLabel %><%= taskType %>Dialog">
+				    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add <%= parentLabel %> <%= taskType %>
+				  </button>
+				</div>
+			</div>
+			
+			<!-- Modal -->
+			<div class="modal" id="add<%= parentLabel %><%= taskType %>Dialog" tabindex="-1" role="dialog" aria-labelledby="add<%= parentLabel %><%= taskType %>DialogLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="add<%= parentLabel %><%= taskType %>DialogLabel">Add <%= parentLabel %> <%= taskType %></h4>
+			      </div>
+			      <div class="modal-body">
+			        <form class="form-horizontal">
+			          <div class="form-group">
+			            <label for="add<%= parentLabel %><%= taskType %>Name" class="col-sm-2 control-label">Name</label>
+			            <div class="col-sm-10">
+			              <input type="text" class="form-control" id="add<%= parentLabel %><%= taskType %>Name" placeholder="Name">
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="task<%= parentLabel %><%= taskType %>Value" class="col-sm-2 control-label">Amount</label>
+			            <div class="col-sm-10">
+			              <input type="number" min="0" step="0.01" class="form-control text-right" id="task<%= parentLabel %><%= taskType %>Value" value="<%= defaultValue %>"/>
+			            </div>
+			          </div>
+			        </form>
+			        <div id="add<%= parentLabel %><%= taskType %>ErrorMsg" class="alert alert-danger collapse"></div>
+			      </div>
+			      <div class="modal-footer">
+			          <button id="add<%= parentLabel %><%= taskType %>Btn" type="button" class="btn btn-primary">Save</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<script>
+			  $('#add<%= parentLabel %><%= taskType %>Dialog').on('shown.bs.modal', function () {
+			    $('#add<%= parentLabel %><%= taskType %>Name').focus()
+			  })
+			
+			$('#add<%= parentLabel %><%= taskType %>Dialog').submit(function(event){
+			
+			  // prevent default browser behaviour
+			  event.preventDefault();
+			
+			  //do stuff with your form here
+			});
+			</script>
+	
+			<br/>
+		<% } %>
+				
+		<div id="task<%= parentLabel %><%= taskType %>List">
+		</div>
+
+		<!-- Modal -->
+		<div class="modal" id="edit<%= parentLabel %><%= taskType %>Dialog" tabindex="-1" role="dialog" aria-labelledby="edit<%= parentLabel %><%= taskType %>DialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="edit<%= parentLabel %><%= taskType %>DialogLabel">Edit <%= parentLabel %> <%= taskType %> - <span id="edit<%= parentLabel %><%= taskType %>TitleName"></span></h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal">
+		          <div class="form-group">
+		            <label for="edit<%= parentLabel %><%= taskType %>Name" class="col-sm-2 control-label">Name</label>
+		            <div class="col-sm-10">
+		              <input type="text" class="form-control" id="edit<%= parentLabel %><%= taskType %>Name" placeholder="Name">
+		            </div>
+		          </div>
+		          <div class="form-group">
+		            <label for="edit<%= parentLabel %><%= taskType %>Value" class="col-sm-2 control-label">Amount</label>
+		            <div class="col-sm-10">
+		              <input type="number" min="0" step="0.01" class="form-control text-right" id="edit<%= parentLabel %><%= taskType %>Value"/>
+		            </div>
+		          </div>
+		        </form>
+		        <div id="edit<%= parentLabel %><%= taskType %>ErrorMsg" class="alert alert-danger collapse"></div>
+		      </div>
+		      <div class="modal-footer">
+		          <button id="edit<%= parentLabel %><%= taskType %>Btn" type="button" class="btn btn-primary">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script>
+		  $('#edit<%= parentLabel %><%= taskType %>Dialog').on('shown.bs.modal', function () {
+		    $('#edit<%= parentLabel %><%= taskType %>Name').focus()
+		  })
+		
+		$('#edit<%= parentLabel %><%= taskType %>Dialog').submit(function(event){
+		
+		  // prevent default browser behaviour
+		  event.preventDefault();
+		
+		  //do stuff with your form here
+		});
+		</script>
+
+		<!-- Modal -->
+		<div class="modal" id="delete<%= parentLabel %><%= taskType %>Dialog" tabindex="-1" role="dialog" aria-labelledby="delete<%= parentLabel %><%= taskType %>DialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="delete<%= parentLabel %><%= taskType %>DialogLabel">Delete <%= parentLabel %> <%= taskType %> - <span id="delete<%= parentLabel %><%= taskType %>TitleName"></span></h4>
+		      </div>
+		      <div class="modal-body">
+		        Are you sure?
+		        <div id="delete<%= parentLabel %><%= taskType %>ErrorMsg" class="alert alert-danger collapse"></div>
+		      </div>
+		      <div class="modal-footer">
+		          <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
+		          <button id="delete<%= parentLabel %><%= taskType %>Btn" type="button" class="btn btn-primary">Delete</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script>
+		$('#delete<%= parentLabel %><%= taskType %>Dialog').submit(function(event){
+		
+		  // prevent default browser behaviour
+		  event.preventDefault();
+		
+		  //do stuff with your form here
+		});
+		</script>
+
+		<!-- Modal -->
+		<div class="modal" id="trn<%= parentLabel %><%= taskType %>Dialog" tabindex="-1" role="dialog" aria-labelledby="trn<%= parentLabel %><%= taskType %>DialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="trn<%= parentLabel %><%= taskType %>DialogLabel"><%= taskType %> - <span id="trn<%= parentLabel %><%= taskType %>TitleName"></span></h4>
+		      </div>
+		      <div class="modal-body">
+		        <span id="trn<%= parentLabel %><%= taskType %>TitleName"></span>
+		        <form class="form-horizontal">
+		          <div class="form-group">
+		            <label for="edit<%= parentLabel %><%= taskType %>Value" class="col-sm-10 control-label">
+		            	You are about to
+		            	<em><% if (taskType=="Reward") { %>add<% } else { %>deduct<% } %></em>
+		            	the following amount 
+		            	<% if (taskType=="Reward") { %>to<% } else { %>from<% } %>
+		            	the account:
+		            </label>
+		            <div class="col-sm-2">
+		              <input type="text" readonly class="form-control text-right" id="trn<%= parentLabel %><%= taskType %>Value"/>
+		            </div>
+		          </div>
+		        </form>
+		        <div id="trn<%= parentLabel %><%= taskType %>ErrorMsg" class="alert alert-danger collapse"></div>
+		      </div>
+		      <div class="modal-footer">
+		          <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
+		          <button id="trn<%= parentLabel %><%= taskType %>Btn" type="button" class="btn btn-primary">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script>
+		$('#trn<%= parentLabel %><%= taskType %>Dialog').submit(function(event){
+		
+		  // prevent default browser behaviour
+		  event.preventDefault();
+		
+		  //do stuff with your form here
+		});
+		</script>
+
+	</div>
+<% } %>

@@ -1,0 +1,49 @@
+<!-- ShellView handles external authentication and presents the header for navigation and footer. -->
+<script>console.log("ShellView.html");</script>
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+<script>function onLoad() { gapi.load('auth2', function() { gapi.auth2.init(); }); }</script>
+<script>function signOut() { auth.signOut(); }</script>
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+
+            <!-- button bar for small screen -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">ketmo</a>
+            </div>
+            <div class="collapse navbar-collapse pull-right">
+                <ul class="nav navbar-nav">
+                    <li role="presentation" class="home-menu active"><a href="#">Home</a></li>
+                    <li role="presentation" class="logout-menu"><a href="#" onclick="signOut();">Logout</a></li>
+                </ul>
+            </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" id="content">
+        
+             <!-- content will be populated by the app -->
+
+        </div>
+    </div>
+
+
+    <footer>
+      <div class="row-fluid">
+        <div class="col-md-12">
+          <hr/>
+          <p>&copy; 2017 | Contact us at <a href="mailto:support@ketmo.net">support@ketmo.net</a></p>
+	</div>
+      </div>
+    </footer>
+
+</div>

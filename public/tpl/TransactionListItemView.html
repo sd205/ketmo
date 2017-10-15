@@ -1,0 +1,10 @@
+<td><%= comment %></td>
+<td class="text-right"><%= numeral(amount).format("0.00") %></td>
+<td class="text-right">
+	<%
+		 var appliedDate = new Date(applied);
+		 var monthName = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][appliedDate.getUTCMonth()];
+	%>
+	<%= ("0"+appliedDate.getDate()).substr(-2) %> <%= monthName %> <%= appliedDate.getFullYear() %>
+	<%= ("0"+appliedDate.getHours()).substr(-2) %>:<%= ("0"+appliedDate.getMinutes()).substr(-2) %>:<%= ("0"+appliedDate.getSeconds()).substr(-2) %>
+</td>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ketmo</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="405093204476-ukgtnhq2jjqhc2bvjl311vjgmdbe3tdd.apps.googleusercontent.com">
+
+    <!-- stylesheets -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- library scripts -->
+    <script src="http://use.edgefonts.net/source-sans-pro.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script src="lib/jquery-1.9.1.min.js"></script>
+    <script src="lib/underscore-min.js"></script>
+    <script src="lib/underscore.template-helpers.js"></script>
+    <script src="lib/numeral.min.js"></script>
+    <script src="lib/backbone-min.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+
+    <!-- app scripts -->
+    <script src="auth/js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/models/model-rest.js"></script>
+    <script src="js/views/shell.js"></script>
+    <script src="js/views/signup.js"></script>
+    <script src="js/views/home.js"></script>
+    <script src="js/views/fund.js"></script>
+    <script src="js/views/account.js"></script>
+    <script src="js/views/task.js"></script>
+    <script>function onSigninGoogle(googleUser) { auth.signinGoogle(googleUser); }</script>
+    <script>
+      $(document).on("ready", function () {
+          ketmo.init();
+      });
+    </script>
+  </head>
+
+
+  <body>
+    <div id="ketmo"/> <!-- will be populated dynamically -->
+  </body>
+</html>

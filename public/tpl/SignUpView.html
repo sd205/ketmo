@@ -1,0 +1,56 @@
+<script>console.log("SignUpView.html");</script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+
+            <!-- button bar for small screen -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">ketmo</a>
+            </div>
+            <div class="collapse navbar-collapse pull-right">
+                <ul class="nav navbar-nav">
+                    <li role="presentation" class="home-menu active"><a href="#">Home</a></li>
+                </ul>
+            </div>
+    </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" id="content">
+
+      <div class="row">
+        <div class="col-sm-12">
+            <h2>Welcome to KETMO</h2>
+    	    <p>KETMO is a simple tool to keep track of your kids' pocket money. It's still in development at the moment,
+               but if you'd like to take a look at what we're working on, feel free to register.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+            <div class="g-signin2" data-onsuccess="onSigninGoogle"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="row-fluid">
+      <div class="col-md-12">
+        <hr/>
+        <p>&copy; 2017 | Contact us at <a href="mailto:support@ketmo.net">support@ketmo.net</a></p>
+      </div>
+    </div>
+  </footer>
+
+</div>

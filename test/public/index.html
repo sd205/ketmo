@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ketmo browser tests</title>
+  <link rel="stylesheet" media="all" href="css/mocha.css">
+
+    <script src="/lib/jquery-1.9.1.min.js"></script>
+    <script src="/lib/underscore-min.js"></script>
+    <script src="/lib/underscore.template-helpers.js"></script>
+    <script src="/lib/backbone-min.js"></script>
+
+  <script src="lib/mocha.js"></script>
+  <script src="lib/chai.js"></script>
+  <script>mocha.setup('bdd');</script>
+</head>
+<body onload="">
+  <div id="mocha"><p><a href=".">Index</a></p></div>
+  <div id="messages"></div>
+  <div id="fixtures"></div>
+
+  <!-- use the test auth -->
+  <script src="/test/js/auth.js"></script>
+
+  <script src="/js/app.js"></script>
+  <script src="app.test.js"></script>
+
+  <!-- use the test model -->
+  <script src="/test/js/model-test.js"></script>
+
+  <script src="/js/views/shell.js"></script>
+  <script src="/js/views/signup.js"></script>
+  <script src="/js/views/home.js"></script>
+  <script src="/js/views/fund.js"></script>
+  <script src="/js/views/account.js"></script>
+  <script src="/js/views/task.js"></script>
+
+  <script>mocha.run();</script>
+
+  <div id="ketmo"/>
+
+</body>
+</html>

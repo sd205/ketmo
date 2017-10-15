@@ -1,0 +1,249 @@
+<style>
+.clickable {
+    cursor: pointer;
+}    
+ul.features {
+	padding-left: 0px;
+	margin-bottom: 0px;
+}
+li.feature {
+	list-style-type: none;
+}
+</style>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.panel-heading span.clickable').on("click", function (e) {
+            if ($(this).parents('.panel').find('.panel-body').hasClass('hidden')) {
+            		$(this).parents('.panel').find('.panel-body').removeClass('hidden');
+            } 
+            if ($(this).hasClass('panel-collapsed')) {
+                // expand the panel
+                $(this).parents('.panel').find('.panel-body').slideDown(100);
+                $(this).removeClass('panel-collapsed');
+                $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            }
+            else {
+                // collapse the panel
+                $(this).parents('.panel').find('.panel-body').slideUp(100);
+                $(this).addClass('panel-collapsed');
+                $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+            }
+        });
+    });
+</script>
+
+<div class="row">
+	<div class="col-sm-12">
+		<h2><%= name %></h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Enabled Features<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span></h3>
+		  </div>
+		  <div class="panel-body hidden">
+
+
+				<!-- Show the enabled features -->
+                                <%
+				  var allFeatures = getAllFeatures();
+				  if (features==0) {
+				    %></p>None<p><%
+					} else {
+						%><ul class="features"><%
+					  for (key in allFeatures) {
+					    if (features & allFeatures[key].value) {
+					     	%><li class="feature"><%= allFeatures[key].label %></li><%
+					    }
+					  }
+						%></ul><%
+				  }
+				%>
+
+
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteFundDialog">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal" id="deleteFundDialog" tabindex="-1" role="dialog" aria-labelledby="deleteFundDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="deleteFundDialogLabel">Delete Fund - <%= name %></h4>
+		      </div>
+		      <div class="modal-body">
+		        Are you sure?
+		      </div>
+		      <div class="modal-footer">
+		          <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
+		          <button id="deleteFundBtn" type="button" class="btn btn-primary">Delete</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editFundDialog">
+		  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal" id="editFundDialog" tabindex="-1" role="dialog" aria-labelledby="editFundDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="editFundDialogLabel">Edit Fund - <%= name %></h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal">
+		          <div class="form-group">
+		            <label for="editFundName" class="col-sm-2 control-label">Name</label>
+		            <div class="col-sm-10">
+		              <input type="text" class="form-control" id="editFundName" value="<%= name %>"/>
+		            </div>
+		          </div>
+		          <div class="form-group">
+		            <label for="editFundFeatures" class="col-sm-2 control-label">Features</label>
+		            <div class="col-sm-10">
+
+
+				<!-- build the feature list -->
+                                <div class="panel panel-default"><div class="panel-body"><%
+				  for (key in allFeatures) {
+				    %><p><input type="checkbox" id="editFundFeature<%= allFeatures[key].value %>" value="<%= allFeatures[key].value %>" <%
+				    if (features & allFeatures[key].value) {
+				     	%>checked="true"<%
+				    }
+				    %>><%= allFeatures[key].label %></input></p><%
+				  }
+				%></div></div>
+
+
+		            </div>
+		          </div>
+		          <div class="form-group">
+		            <label for="editFundDefaultAmount" class="col-sm-2 control-label">Default Amount</label>
+		            <div class="col-sm-10">
+		              <input type="number" min="0" step="0.01" class="form-control text-right" id="editFundDefaultAmount" value="<%= (typeof defaultValue == 'undefined') ? 1 : defaultValue %>"/>
+		            </div>
+		          </div>
+		        </form>
+		        <div id="editFundErrorMsg" class="alert alert-danger collapse"></div>
+		      </div>
+		      <div class="modal-footer">
+		          <button id="editFundBtn" type="button" class="btn btn-primary">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script>
+		  $('#editFundDialog').on('shown.bs.modal', function () {
+		    var el = $('#editFundName');
+		    var len = el.val().length;
+		
+		    el.focus();
+		    el[0].setSelectionRange(len, len);
+		  })
+		
+		$('#editFundDialog').submit(function(event){
+		  console.log("#editFundDialog.submit");
+		  // prevent default browser behaviour
+		  event.preventDefault();
+		
+		  //do stuff with your form here
+		});
+		</script>
+
+	</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+		<h3>Accounts</h3>
+
+		<div id="addAccount" class="row">
+			<div class="col-sm-12">
+			  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountDialog">
+			    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Account
+			  </button>
+			</div>
+		</div>
+		
+		<!-- Modal -->
+		<div class="modal" id="addAccountDialog" tabindex="-1" role="dialog" aria-labelledby="addFundDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="addAccountDialogLabel">Add Account</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal">
+		          <div class="form-group">
+		            <label for="addAccountName" class="col-sm-2 control-label">Name</label>
+		            <div class="col-sm-10">
+		              <input type="text" class="form-control" id="addAccountName" placeholder="Name">
+		            </div>
+		          </div>
+		        </form>
+		        <div id="addAccountErrorMsg" class="alert alert-danger collapse"></div>
+		      </div>
+		      <div class="modal-footer">
+		          <button id="addAccountBtn" type="button" class="btn btn-primary">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script>
+		  $('#addAccountDialog').on('shown.bs.modal', function () {
+		    $('#addAccountName').focus()
+		  })
+		
+		$('#addAccountDialog').submit(function(event){
+		
+		  // prevent default browser behaviour
+		  event.preventDefault();
+		
+		  //do stuff with your form here
+		});
+		</script>
+
+		<br/>
+		
+		<div id="accountlist">
+		</div>
+		
+  </div>
+</div>
+
+<div class="row">
+	<div id="fundrewardlist">	
+	</div>
+	<div id="fundpenaltylist">	
+	</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+  Use the Edit button to change the features of your fund, and the default amount for rewards and penalties.  
+  Fund rewards and penalties apply to all accounts in the fund.  
+  Account rewards and penalties apply to just one account.
+  You can also set a default amount for each account.
+  </div>
+</div>

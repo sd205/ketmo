@@ -1,0 +1,209 @@
+<div class="row">
+	<div class="col-sm-12">
+		<h2><%= name %> / <a href="#fund/<%= fund_id %>"><%= _.fund.name %></a></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+  
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteAccountDialog">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal" id="deleteAccountDialog" tabindex="-1" role="dialog" aria-labelledby="deleteAccountDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="deleteAccountDialogLabel">Delete Account - <%= name %></h4>
+		      </div>
+		      <div class="modal-body">
+		        Are you sure?
+		      </div>
+		      <div class="modal-footer">
+		          <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
+		          <button id="deleteAccountBtn" type="button" class="btn btn-primary">Delete</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editAccountDialog">
+		  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal" id="editAccountDialog" tabindex="-1" role="dialog" aria-labelledby="editAccountDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="editAccountDialogLabel">Edit Account - <%= name %></h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal">
+		          <div class="form-group">
+		            <label for="editAccountName" class="col-sm-2 control-label">Name</label>
+		            <div class="col-sm-10">
+		              <input type="text" class="form-control" id="editAccountName" value="<%= name %>"/>
+		            </div>
+		          </div>
+		          <div class="form-group">
+		            <label for="editAccountDefaultAmount" class="col-sm-2 control-label">Default Amount</label>
+		            <div class="col-sm-10">
+		              <input type="number" min="0" step="0.01" class="form-control text-right" id="editAccountDefaultAmount" value="<%= (typeof defaultValue == 'undefined') ? 1 : defaultValue %>"/>
+		            </div>
+		          </div>
+		        </form>
+		        <div id="editAccountErrorMsg" class="alert alert-danger collapse"></div>
+		      </div>
+		      <div class="modal-footer">
+		          <button id="editAccountBtn" type="button" class="btn btn-primary">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script>
+		  $('#editAccountDialog').on('shown.bs.modal', function () {
+		    var el = $('#editAccountName');
+		    var len = el.val().length;
+		
+		    el.focus();
+		    el[0].setSelectionRange(len, len);
+		  })
+		
+		$('#editAccountDialog').submit(function(event){
+		  console.log("#editAccountDialog.submit");
+		  // prevent default browser behaviour
+		  event.preventDefault();
+		
+		  //do stuff with your form here
+		});
+		</script>
+
+	</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+		<% var balanceFormat = numeral(balance).format("0.00"); %>
+  	<div class="pull-left"><h3>Balance</h3></div>
+  	<div class="pull-right"><h3><%= balanceFormat %></h3></div>
+	</div>
+</div>
+
+<% if (_.fund.features & getAllFeatures()["DEPOSIT_WITHDRAW"].value) { %>
+	<div class="row">
+	  <div class="col-sm-12">
+	  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#accountDepositDialog">
+			  <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> Make Deposit
+			</button>
+			
+			<!-- Modal -->
+			<div class="modal" id="accountDepositDialog" tabindex="-1" role="dialog" aria-labelledby="accountDepositDialogLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="accountDepositDialogLabel">Make Deposit - <%= name %></h4>
+			      </div>
+			      <div class="modal-body">
+			        <form class="form-horizontal">
+			          <div class="form-group">
+			            <label for="accountDepositValue" class="col-sm-2 control-label">Amount</label>
+			            <div class="col-sm-10">
+			              <input type="number" min="0" step="0.01" class="form-control text-right" id="accountDepositValue" value="<%= 0.00 %>"/>
+			            </div>
+			          </div>
+			        <div id="accountDepositErrorMsg" class="alert alert-danger collapse"></div>
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			          <button id="accountDepositBtn" type="button" class="btn btn-primary">Save</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+	
+			<script>
+			  $('#accountDepositDialog').on('shown.bs.modal', function () {
+			    $('#accountDepositValue').focus();
+			  })
+			
+			$('#accountDepositDialog').submit(function(event){
+			  console.log("#accountDepositDialog.submit");
+			  // prevent default browser behaviour
+			  event.preventDefault();
+			
+			  //do stuff with your form here
+			});
+			</script>
+	
+	  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#accountWithdrawDialog">
+			  <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span> Make Withdrawal
+			</button>
+			
+			<!-- Modal -->
+			<div class="modal" id="accountWithdrawDialog" tabindex="-1" role="dialog" aria-labelledby="accountWithdrawDialogLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="accountWithdrawDialogLabel">Make Withdrawal - <%= name %></h4>
+			      </div>
+			      <div class="modal-body">
+			        <form class="form-horizontal">
+			          <div class="form-group">
+			            <label for="accountWithdrawValue" class="col-sm-2 control-label">Amount</label>
+			            <div class="col-sm-10">
+			              <input type="number" min="0" step="0.01" class="form-control text-right" id="accountWithdrawValue" value="<%= 0.00 %>"/>
+			            </div>
+			          </div>
+			        <div id="accountWithdrawErrorMsg" class="alert alert-danger collapse"></div>
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			          <button id="accountWithdrawBtn" type="button" class="btn btn-primary">Save</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+	
+			<script>
+			  $('#accountWithdrawDialog').on('shown.bs.modal', function () {
+			    $('#accountWithdrawValue').focus();
+			  })
+			
+			$('#accountWithdrawDialog').submit(function(event){
+			  console.log("#accountDepositDialog.submit");
+			  // prevent default browser behaviour
+			  event.preventDefault();
+			
+			  //do stuff with your form here
+			});
+			</script>
+	  </div>
+	</div>
+<% } %>
+
+<div class="row">
+  <div class="col-sm-6">
+		<div class="row">
+			<div id="accfundrewardlist"></div>
+			<div id="accfundpenaltylist"></div>
+			<div id="accountrewardlist"></div>
+			<div id="accountpenaltylist"></div>
+		</div>
+	</div>
+  <div class="col-sm-6">
+		<div class="row"><div>
+  		<div class="col-sm-12">
+				<h3 id="transactionsTitle" style="display: none;">Transactions</h3>
+				<div id="acctransactionlist"></div>
+			</div>
+		</div></div>
+	</div>
+</div>

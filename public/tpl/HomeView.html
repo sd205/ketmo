@@ -1,0 +1,68 @@
+<script>console.log("HomeView.html");</script>
+<div class="row">
+
+    <div class="col-sm-12">
+        <h2>Funds</h2>
+	<p>Funds enable you to group your accounts.  Each fund can have different features enabled.</p>
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addFundDialog">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Fund
+            </button>
+
+    </div>
+</div>
+
+<br/>
+
+<div id="fundlist">
+    <div class="row">
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="addFundDialog" tabindex="-1" role="dialog" aria-labelledby="addFundDialogLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addFundDialogLabel">Add Fund</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="addFundName" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="addFundName" placeholder="Name">
+            </div>
+          </div>
+        </form>
+        <div id="addFundErrorMsg" class="alert alert-danger collapse"></div>
+      </div>
+      <div class="modal-footer">
+          <button id="addFundBtn" type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#addFundDialog').on('shown.bs.modal', function () {
+    $('#addFundName').focus()
+  })
+
+  $('#addFundDialog').submit(function(event){
+    // prevent default browser behaviour
+    event.preventDefault();
+    //do stuff with your form here
+  });
+</script>
+
+
