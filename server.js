@@ -1,4 +1,4 @@
-console.log("server.js");
+//console.log("server.js");
 
 var express      = require('express');
 var path         = require('path');
@@ -7,9 +7,11 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var env          = require('./env');
+var morgan  = require('morgan');
 
 //setup up the Express app
 var app = express();
+app.use(morgan('combined'));
 
 // view engine setup - not used yet
 app.set('views', path.join(__dirname, 'views'));
