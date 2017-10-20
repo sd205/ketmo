@@ -1,4 +1,30 @@
+console.log("env.js");
 var mongoose = require('mongoose');
+var mongodb = require('mongodb');
+var mongoURL = null, db = null, dbDetails = new Object();
+var mongoURLLabel = "";
+
+var initDb = function(callback, next) {
+console.log("env.initDb");
+  if (mongoURL == null) return;
+
+  if (mongodb == null) return;
+
+  mongodb.connect(mongoURL, function(err, conn) {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    db = conn;
+    dbDetails.databaseName = db.databaseName;
+    dbDetails.url = mongoURLLabel;
+    dbDetails.type = 'MongoDB';
+
+    console.log('Connected to MongoDB at: %s', mongoURL);
+    next();
+  });
+};
 
 //helper object to manage the environment configuration
 var env = {
@@ -10,8 +36,8 @@ var env = {
 
   //get the mongoose connection, either via OpenShift or on localhost
   getConnection: function(next) {
-	  var mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL;
-	  var mongoURLLabel = "";
+console.log("env.getConnection");
+	  mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL;
     if(mongoURL == null && process.env.DATABASE_SERVICE_NAME){
 		  var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
@@ -28,7 +54,7 @@ var env = {
 		    // Provide UI label that excludes user id and pw
 		    mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
 		    mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-		
+
 		  }
       connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
       process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
@@ -36,16 +62,20 @@ var env = {
       process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
       process.env.OPENSHIFT_APP_NAME;
     } else {
-			mongoURL = '127.0.0.1:27017/ketmodev';
+			mongoURL = 'mongodb://127.0.0.1:27017/ketmodev';
 		}
     //connect to the mongo database...
+  if (!db) {
+    initDb(function(err){}, next);
+  }
+/*
     mongoose.connect(mongoURL);
     var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function() {
       next();
     });
-
+*/
   },
 
   //close the mongoose connection
@@ -55,6 +85,7 @@ var env = {
 
   //start the app
   start: function(app) {
+console.log("env.start");
     app.set('ipaddress', this.ipaddress);
     app.set('port', this.port);
 
