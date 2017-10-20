@@ -30,6 +30,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //use a cookie parser (https://www.npmjs.com/package/cookie-parser)
 app.use(cookieParser());
 
+app.get('/pagecount', function (req, res) {
+  res.send('{ pageCount: -1 }');
+});
+
 //map the app root for static content to the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth',express.static(path.join(__dirname, 'auth/public')));
@@ -44,25 +48,6 @@ var services = require('./routes/services');
 
 app.use('/auth', authRouter);
 app.use('/api', services);
-
-app.get('/pagecount', function (req, res) {
-/*
-  // try to initialize the db on every request if it's not already
-  // initialized.
-  if (!db) {
-    initDb(function(err){});
-  }
-  if (db) {
-    db.collection('counts').count(function(err, count ){
-      res.send('{ pageCount: ' + count + '}');
-    });
-  } else {
-*/
-    res.send('{ pageCount: -1 }');
-/*
-  }
-*/
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
