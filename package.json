@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 test/*.test.js"
+    "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 test/openshift/*_test.js"
   },
   "repository": {
     "type": "git",
