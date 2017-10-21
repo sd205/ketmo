@@ -33,9 +33,10 @@ var env = {
 		  }
 
     } else {
-			mongoURL = 'mongodb://127.0.0.1:27017/ketmodev';
+			mongoURL = 'mongodb://localhost:27017/ketmodev';
 		}
 
+console.log("env.getConnection(): mongoURL="+mongoURL);
 	  mongoose.connect(mongoURL, function(err) {
 	    if (err) {
 	      console.log('Error connecting to Mongo. Message:\n'+err);
