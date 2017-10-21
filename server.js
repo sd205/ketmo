@@ -7,11 +7,11 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var env          = require('./env');
-var morgan  = require('morgan');
+//var morgan  = require('morgan');
 
 //setup up the Express app
 var app = express();
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 
 // view engine setup - not used yet
 app.set('views', path.join(__dirname, 'views'));
@@ -44,7 +44,7 @@ if (env.isLocalhost()) {
 
 //map the routers
 var authRouter = require('./auth/auth-router');
-var services = require('./routes/services');
+var services = require('./services');
 
 app.use('/auth', authRouter);
 app.use('/api', services);

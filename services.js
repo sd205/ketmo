@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-var auth        = require('../ketmoAuth');
-var Fund        = require('../model/fund');
-var Account     = require('../model/account');
-var Task        = require('../model/task');
-var Transaction = require('../model/transaction');
+var auth        = require('./ketmoAuth');
+var Fund        = require('./model/fund');
+var Account     = require('./model/account');
+var Task        = require('./model/task');
+var Transaction = require('./model/transaction');
 
 //GLOBAL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

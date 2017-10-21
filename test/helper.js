@@ -12,7 +12,7 @@ var helper = {
   base_url: "",
 
   before: function(done) {
-    this.base_url = "http://"+env.ipaddress+":"+env.port+"/"
+    this.base_url = "http://"+(env.isLocalhost()?"localhost":env.ipaddress)+":"+env.port+"/"
     env.getConnection(done);
   },
 
