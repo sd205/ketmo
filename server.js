@@ -30,8 +30,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //use a cookie parser (https://www.npmjs.com/package/cookie-parser)
 app.use(cookieParser());
 
-app.get('/pagecount', function (req, res) {
-  res.send('{ pageCount: -1 }');
+//For live test
+app.get('/live', function (req, res) {
+  res.send('{ msg: "Number 5 is alive!" }');
 });
 
 //map the app root for static content to the public folder
