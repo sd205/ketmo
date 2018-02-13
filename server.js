@@ -38,6 +38,7 @@ app.get('/live', function (req, res) {
 app.get('/pagecount', function (req, res) {
   res.send('{ msg: "Number 5 is alive!" }');
 });
+
 //map the app root for static content to the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth',express.static(path.join(__dirname, 'auth/public')));
