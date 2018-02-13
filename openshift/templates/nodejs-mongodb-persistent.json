@@ -191,7 +191,7 @@
           "spec": {
             "containers": [
               {
-                "name": "nodejs-mongo-persistent",
+                "name": "nodejs-mongo-persistent-ketmo",
                 "image": " ",
                 "ports": [
                   {
